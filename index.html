@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Malla Curricular — Escuela de Alexandria 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:     #0F1923;
+    --parchment: #F5EDD8;
+    --gold:    #C9933A;
+    --gold2:   #E8B96A;
+    --gold3:   #FBE8B8;
+    --cream:   #FBF5E6;
+    --rust:    #8B3A2A;
+    --olive:   #4A5C2F;
+    --teal:    #1E5C6E;
+    --plum:    #5C2A5C;
+    --slate:   #2A3F5C;
+    --divinity:   #C9933A;
+    --filologia:  #1E5C6E;
+    --eclesio:    #4A5C2F;
+    --historia:   #8B3A2A;
+    --lenguas:    #5C2A5C;
+    --col-div: #C9933A;
+    --col-fil: #1E5C6E;
+    --col-ecl: #4A5C2F;
+    --col-his: #8B3A2A;
+    --col-len: #5C2A5C;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--ink);
+    font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .page {
+    background: var(--cream);
+    width: 100%;
+    max-width: 1100px;
+    position: relative;
+    overflow: hidden;
+    border: 3px solid var(--gold);
+    box-shadow: 0 0 0 8px var(--ink), 0 0 0 10px var(--gold), 0 40px 80px rgba(0,0,0,0.7);
+  }
+
+  /* ── Texture overlay ── */
+  .page::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(201,147,58,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(92,42,92,0.05) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Corner ornaments ── */
+  .corner {
+    position: absolute;
+    width: 60px; height: 60px;
+    z-index: 2;
+  }
+  .corner svg { width: 100%; height: 100%; }
+  .corner.tl { top: 12px; left: 12px; }
+  .corner.tr { top: 12px; right: 12px; transform: scaleX(-1); }
+  .corner.bl { bottom: 12px; left: 12px; transform: scaleY(-1); }
+  .corner.br { bottom: 12px; right: 12px; transform: scale(-1); }
+
+  /* ── Header ── */
+  .header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2.8rem 3rem 1.8rem;
+    border-bottom: 1px solid rgba(201,147,58,0.3);
+  }
+  .header-eyebrow {
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+  .header h1 span { color: var(--gold); }
+  .header-sub {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.05rem;
+    font-style: italic;
+    color: rgba(15,25,35,0.55);
+    margin-top: 0.6rem;
+    letter-spacing: 0.04em;
+  }
+  .gold-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    justify-content: center;
+    margin-top: 1.2rem;
+  }
+  .gold-divider::before,
+  .gold-divider::after {
+    content: '';
+    flex: 1;
+    max-width: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .gold-divider::after { background: linear-gradient(90deg, var(--gold), transparent); }
+  .gold-divider-gem {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  /* ── Grid ── */
+  .grid-wrapper {
+    position: relative;
+    z-index: 1;
+    padding: 2rem 2.5rem 1.5rem;
+  }
+
+  .columns {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.2rem;
+  }
+
+  /* ── Column header ── */
+  .col-head {
+    padding: 0.7rem 0.5rem 0.6rem;
+    text-align: center;
+    border-radius: 4px 4px 0 0;
+    margin-bottom: 0.6rem;
+    position: relative;
+  }
+  .col-head::after {
+    content: '';
+    position: absolute;
+    bottom: -6px; left: 50%;
+    transform: translateX(-50%);
+    width: 20px; height: 6px;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+  }
+  .col-head .col-icon {
+    font-size: 1.3rem;
+    display: block;
+    margin-bottom: 0.3rem;
+    opacity: 0.9;
+  }
+  .col-head h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 1.3;
+  }
+
+  /* per-column colors */
+  .col-divinidad  .col-head { background: var(--col-div); }
+  .col-divinidad  .col-head::after { background: var(--col-div); }
+  .col-filologia  .col-head { background: var(--col-fil); }
+  .col-filologia  .col-head::after { background: var(--col-fil); }
+  .col-eclesio    .col-head { background: var(--col-ecl); }
+  .col-eclesio    .col-head::after { background: var(--col-ecl); }
+  .col-historia   .col-head { background: var(--col-his); }
+  .col-historia   .col-head::after { background: var(--col-his); }
+  .col-lenguas    .col-head { background: var(--col-len); }
+  .col-lenguas    .col-head::after { background: var(--col-len); }
+
+  /* ── Course card ── */
+  .course {
+    background: #fff;
+    border-radius: 4px;
+    padding: 0.55rem 0.65rem;
+    margin-bottom: 0.45rem;
+    border-left: 3px solid;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    transition: transform 0.15s, box-shadow 0.15s;
+    cursor: default;
+    position: relative;
+  }
+  .course:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  }
+  .col-divinidad .course { border-color: var(--col-div); }
+  .col-filologia .course { border-color: var(--col-fil); }
+  .col-eclesio   .course { border-color: var(--col-ecl); }
+  .col-historia  .course { border-color: var(--col-his); }
+  .col-lenguas   .course { border-color: var(--col-len); }
+
+  .course-name {
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--ink);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.3;
+    margin-bottom: 0.2rem;
+  }
+
+  /* modules dots */
+  .modules {
+    display: flex;
+    gap: 3px;
+    margin-top: 0.3rem;
+    flex-wrap: wrap;
+  }
+  .mod-dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.55rem;
+    font-weight: 700;
+    color: #fff;
+    font-family: 'Barlow', sans-serif;
+  }
+  .col-divinidad .mod-dot { background: var(--col-div); }
+  .col-filologia .mod-dot { background: var(--col-fil); }
+  .col-eclesio   .mod-dot { background: var(--col-ecl); }
+  .col-historia  .mod-dot { background: var(--col-his); }
+  .col-lenguas   .mod-dot { background: var(--col-len); }
+
+  /* ── BADGE: new / gratuito ── */
+  .badge {
+    display: inline-block;
+    font-size: 0.5rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 1px 5px;
+    border-radius: 2px;
+    margin-left: 4px;
+    vertical-align: middle;
+    color: #fff;
+    background: var(--gold);
+  }
+
+  /* ── Professors section ── */
+  .professors {
+    position: relative;
+    z-index: 1;
+    padding: 0 2.5rem 2rem;
+  }
+  .professors-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .professors-title::before,
+  .professors-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,147,58,0.4));
+  }
+  .professors-title::after { background: linear-gradient(90deg, rgba(201,147,58,0.4), transparent); }
+
+  .prof-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+  }
+  .prof-card {
+    background: var(--ink);
+    color: #fff;
+    border: 1px solid rgba(201,147,58,0.35);
+    border-radius: 4px;
+    padding: 0.45rem 0.9rem;
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .prof-card .prof-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+  .prof-card.youtube {
+    border-color: rgba(201,147,58,0.6);
+    background: rgba(201,147,58,0.12);
+    color: var(--gold);
+  }
+
+  /* ── Footer ── */
+  .footer {
+    position: relative;
+    z-index: 1;
+    background: var(--ink);
+    padding: 1rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .footer-brand {
+    font-family: 'Cinzel', serif;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+  .footer-brand span { color: var(--gold); display: block; font-size: 0.65rem; letter-spacing: 0.2em; font-weight: 400; }
+  .footer-year {
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .header  { animation: fadeUp 0.6s ease both; }
+  .col     { animation: fadeUp 0.6s ease both; }
+  .col:nth-child(1) { animation-delay: 0.1s; }
+  .col:nth-child(2) { animation-delay: 0.2s; }
+  .col:nth-child(3) { animation-delay: 0.3s; }
+  .col:nth-child(4) { animation-delay: 0.4s; }
+  .col:nth-child(5) { animation-delay: 0.5s; }
+  .professors { animation: fadeUp 0.6s 0.55s ease both; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Corner ornaments -->
+  <div class="corner tl">
+    <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 2 L28 2 M2 2 L2 28" stroke="#C9933A" stroke-width="2"/>
+      <path d="M2 2 L16 16" stroke="#C9933A" stroke-width="1" stroke-dasharray="2 3"/>
+      <rect x="4" y="4" width="10" height="10" stroke="#C9933A" stroke-width="0.8" fill="none" transform="rotate(45 9 9)"/>
+    </svg>
+  </div>
+  <div class="corner tr">
+    <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 2 L28 2 M2 2 L2 28" stroke="#C9933A" stroke-width="2"/>
+      <path d="M2 2 L16 16" stroke="#C9933A" stroke-width="1" stroke-dasharray="2 3"/>
+      <rect x="4" y="4" width="10" height="10" stroke="#C9933A" stroke-width="0.8" fill="none" transform="rotate(45 9 9)"/>
+    </svg>
+  </div>
+  <div class="corner bl">
+    <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 2 L28 2 M2 2 L2 28" stroke="#C9933A" stroke-width="2"/>
+      <path d="M2 2 L16 16" stroke="#C9933A" stroke-width="1" stroke-dasharray="2 3"/>
+      <rect x="4" y="4" width="10" height="10" stroke="#C9933A" stroke-width="0.8" fill="none" transform="rotate(45 9 9)"/>
+    </svg>
+  </div>
+  <div class="corner br">
+    <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 2 L28 2 M2 2 L2 28" stroke="#C9933A" stroke-width="2"/>
+      <path d="M2 2 L16 16" stroke="#C9933A" stroke-width="1" stroke-dasharray="2 3"/>
+      <rect x="4" y="4" width="10" height="10" stroke="#C9933A" stroke-width="0.8" fill="none" transform="rotate(45 9 9)"/>
+    </svg>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-eyebrow">Escuela de Alexandria &nbsp;·&nbsp; Oferta Académica</div>
+    <h1>Malla <span>Curricular</span></h1>
+    <div class="header-sub">Formación bíblica, teológica y lingüística &mdash; 2026</div>
+    <div class="gold-divider"><div class="gold-divider-gem"></div></div>
+  </div>
+
+  <!-- Main grid -->
+  <div class="grid-wrapper">
+    <div class="columns">
+
+      <!-- DIVINIDAD -->
+      <div class="col col-divinidad">
+        <div class="col-head">
+          <span class="col-icon">✦</span>
+          <h2>Divinidad</h2>
+        </div>
+        <div class="course">
+          <div class="course-name">Cosmología</div>
+        </div>
+        <div class="course">
+          <div class="course-name">Modelos Mesiánicos</div>
+        </div>
+        <div class="course">
+          <div class="course-name">Concilio Divino</div>
+          <div class="modules">
+            <div class="mod-dot">I</div>
+            <div class="mod-dot">II</div>
+            <div class="mod-dot">III</div>
+          </div>
+        </div>
+        <div class="course">
+          <div class="course-name">Origen del Mal</div>
+        </div>
+        <div class="course">
+          <div class="course-name">Lib. Batallas YHWH</div>
+          <div class="modules">
+            <div class="mod-dot">I</div>
+            <div class="mod-dot">II</div>
+          </div>
+        </div>
+        <div class="course">
+          <div class="course-name">Teologia Bbilica</div>
+        </div>
+      </div>
+
+      <!-- FILOLOGÍA -->
+      <div class="col col-filologia">
+        <div class="col-head">
+          <span class="col-icon">✦</span>
+          <h2>Filología</h2>
+        </div>
+        <div class="course">
+          <div class="course-name">Mét. Estudio e Inv.</div>
+        </div>
+        <div class="course">
+          <div class="course-name">Crítica Textual I</div>
+        </div>
+        <div class="course">
+          <div class="course-name">Crítica Textual II</div>
+        </div>
+        <div class="course">
+          <div class="course-name">Hermenéutica</div>
+        </div>
+        <div class="course">
+          <div class="course-name">Exegesis Hebrea de Pasajes Especiales A.T</div>
+        </div>
+      </div>
+
+      <!-- ECLESIOLOGÍA -->
+      <div class="col col-eclesio">
+        <div class="col-head">
+          <span class="col-icon">✦</span>
+          <h2>Eclesiología</h2>
+        </div>
+        <div class="course">
+          <div class="course-name">Apologética</div>
+        </div>
+        <div class="course">
+          <div class="course-name">Eclesiología</div>
+          <div class="modules">
+            <div class="mod-dot">I</div>
+            <div class="mod-dot">II</div>
+          </div>
+        </div>
+        <div class="course">
+          <div class="course-name">Sufrientología</div>
+        </div>
+        <div class="course">
+          <div class="course-name">Sectas</div>
+        </div>
+        <div class="course">
+          <div class="course-name">Mujer en la Biblia</div>
+        </div>
+        <div class="course">
+          <div class="course-name">Libros Apócrifos</div>
+        </div>
+        <div class="course">
+          <div class="course-name">Escatología</div>
+          <div class="modules">
+            <div class="mod-dot">I</div>
+            <div class="mod-dot">II</div>
+            <div class="mod-dot">III</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HISTORIA -->
+      <div class="col col-historia">
+        <div class="col-head">
+          <span class="col-icon">✦</span>
+          <h2>Historia</h2>
+        </div>
+        <div class="course">
+          <div class="course-name">Panorama Bíblico</div>
+        </div>
+        <div class="course">
+          <div class="course-name">Historia Cánones</div>
+        </div>
+        <div class="course">
+          <div class="course-name">Periodo del Segundo Templo</div>
+        </div>
+        <div class="course">
+          <div class="course-name">Hist. Cristianismo</div>
+        </div>
+        <div class="course">
+          <div class="course-name">Hist. Crist. Primitivo</div>
+        </div>
+        <div class="course">
+          <div class="course-name">Tiempos Sagrados</div>
+        </div>
+      </div>
+
+      <!-- LENGUAS BÍBLICAS -->
+      <div class="col col-lenguas">
+        <div class="col-head">
+          <span class="col-icon">✦</span>
+          <h2>Lenguas Bíblicas</h2>
+        </div>
+        <div class="course">
+          <div class="course-name">Hebreo Arcaico</div>
+          <div class="modules">
+            <div class="mod-dot">I</div>
+            <div class="mod-dot">II</div>
+            <div class="mod-dot">III</div>
+          </div>
+        </div>
+        <div class="course">
+          <div class="course-name">Griego Koiné I</div>
+          <div class="modules">
+            <div class="mod-dot">I</div>
+            <div class="mod-dot">II</div>
+            <div class="mod-dot">III</div>
+            <div class="mod-dot">IV</div>
+          </div>
+        </div>
+        <div class="course">
+          <div class="course-name">Griego Koiné II</div>
+          <div class="modules">
+            <div class="mod-dot">I</div>
+            <div class="mod-dot">II</div>
+            <div class="mod-dot">III</div>
+            <div class="mod-dot">IV</div>
+          </div>
+        </div>
+        <div class="course">
+          <div class="course-name">Hebreo Masorético</div>
+          <div class="modules">
+            <div class="mod-dot">I</div>
+            <div class="mod-dot">II</div>
+            <div class="mod-dot">III</div>
+            <div class="mod-dot">IV</div>
+          </div>
+        </div>
+        <div class="course">
+          <div class="course-name">EC Nequdot</div>
+        </div>
+        <div class="course">
+          <div class="course-name">Int. Arameo Imperial</div>
+        </div>
+      </div>
+
+    </div><!-- /columns -->
+  </div><!-- /grid-wrapper -->
+
+  <!-- Professors -->
+  <div class="professors">
+    <div class="professors-title">Cuerpo Docente</div>
+    <div class="prof-grid">
+      <div class="prof-card"><div class="prof-dot"></div>Raúl Arce</div>
+      <div class="prof-card"><div class="prof-dot"></div>Lucas Peláez R.</div>
+      <div class="prof-card"><div class="prof-dot"></div>Jesús Mendoza</div>
+      <div class="prof-card"><div class="prof-dot"></div>William Márquez</div>
+      <div class="prof-card"><div class="prof-dot"></div>Anderson Muñoz</div>
+      <div class="prof-card youtube"><div class="prof-dot"></div>YouTube — Cursos Gratuitos</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-brand">
+      <span>Escuela de</span>
+      Alexandria
+    </div>
+    <div class="footer-year">Oferta Académica · 2026</div>
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>
